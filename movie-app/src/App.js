@@ -1,35 +1,28 @@
-import {useState, useEffect} from "react";
-import Movie from "./components/Movie";
+// App.js는 더이상 영화를 로드하지 않고, router을 render 한다!
+// router는 url을 보고 있는 컴포넌트임
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  BrowserRouter,
+} from "react-router-dom";
+import Home from "./routes/Home";
+import Detail from "./routes/Detail";
 
 function App() {
-  const [loading, setLoading] = useState(true);
-  const [movies, setMovies] = useState([]);
-  const getMovies = async () =>{
-    const json = await (await fetch("https://yts.mx/api/v2/list_movies.json?minimum_rating=8.8&sort_by=year")).json();
-      setMovies(json.data.movies)
-      setLoading(false);
-  };
-
-  // just use only once
-  useEffect(() => {
-    getMovies();
-  }, []);
-
   return (
-    <div>
-      {loading ? <h1>Loading....</h1> :  
-      (<div>
-        {movies.map((movie) => (
-        <Movie 
-        key={movie.id}
-        coverImg={movie.medium_cover_image} 
-        title={movie.title} 
-        summary={movie.summary} 
-        genres={movie.genres} />
-        ))}
-      </div>
-      )}
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/movie/:id">
+          {/* /movie/:id 에서 id가 Detail에서 useParams()으로 받는 값이다 id를 다른 걸로도 바꿔봐 그럼 감이 와 */}
+          <Detail />
+        </Route>
+
+        <Route path="/">
+          <Home />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
