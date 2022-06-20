@@ -1,7 +1,0 @@
-/* 이 파일을 index.js에 import 하지 않을 것임 */
-/* 대신에, Button.js에 import 해줄 것임 */
-
-.btn{
-  color: #fff;
-  background-color: tomato;
-}
